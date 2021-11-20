@@ -36,14 +36,25 @@ const ShoeCard = ({
       <Wrapper>
         <ImageWrapper>
           <Image alt="" src={imageSrc} />
+          {variant === 'on-sale' ? (
+            <SaleTag>Sale</SaleTag>
+
+          ) : variant === 'new-release' && (
+            <NewReleaseTag>Just released!</NewReleaseTag>
+
+          )}
         </ImageWrapper>
         <Spacer size={12} />
         <Row>
           <Name>{name}</Name>
-          <Price>{formatPrice(price)}</Price>
+          <Price variant={variant}>{formatPrice(price)}</Price>
         </Row>
         <Row>
           <ColorInfo>{pluralize('Color', numOfColors)}</ColorInfo>
+          {variant === 'on-sale' && (
+            <SalePrice>{formatPrice(salePrice)}</SalePrice>
+          )}
+          
         </Row>
       </Wrapper>
     </Link>
@@ -55,16 +66,22 @@ const Link = styled.a`
   color: inherit;
 `;
 
-const Wrapper = styled.article``;
+const Wrapper = styled.article`
+  max-width: 320px;
+`;
 
 const ImageWrapper = styled.div`
   position: relative;
 `;
 
-const Image = styled.img``;
+const Image = styled.img`
+  width: 100%;
+`;
 
 const Row = styled.div`
   font-size: 1rem;
+  display: flex;
+  justify-content: space-between;
 `;
 
 const Name = styled.h3`
@@ -72,7 +89,10 @@ const Name = styled.h3`
   color: ${COLORS.gray[900]};
 `;
 
-const Price = styled.span``;
+const Price = styled.span`
+  text-decoration: ${props => (props.variant === 'on-sale' ? 'line-through' : 'none')};
+  color: ${props => (props.variant === 'on-sale' ? COLORS.gray[700] : COLORS.gray[900])};
+`;
 
 const ColorInfo = styled.p`
   color: ${COLORS.gray[700]};
@@ -82,5 +102,27 @@ const SalePrice = styled.span`
   font-weight: ${WEIGHTS.medium};
   color: ${COLORS.primary};
 `;
+
+const SaleTag = styled.span`
+  background-color: ${COLORS.primary};
+  color: ${COLORS.white};
+  font-size: 1rem;
+  position: absolute;
+  top: 12px;
+  right: -4px;
+  border-radius: 2px;
+  padding: 7px 9px 9px 10px;
+`; 
+
+const NewReleaseTag = styled.span`
+  background-color: ${COLORS.secondary};
+  color: ${COLORS.white};
+  font-size: 1rem;
+  position: absolute;
+  top: 12px;
+  right: -4px;
+  border-radius: 2px;
+  padding: 7px 9px 9px 10px;
+`; 
 
 export default ShoeCard;

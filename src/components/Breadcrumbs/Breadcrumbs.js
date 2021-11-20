@@ -18,6 +18,7 @@ Breadcrumbs.Crumb = ({ href, children, delegated }) => {
 };
 
 const CrumbWrapper = styled.div`
+ 
   &:not(:first-of-type) {
     margin-left: 8px;
 
@@ -41,5 +42,7 @@ const CrumbLink = styled.a`
 const Wrapper = styled.nav`
   display: flex;
   font-size: 0.875rem;
+  height: 53px;
+  align-items: center;
 `;
 export default Breadcrumbs;
